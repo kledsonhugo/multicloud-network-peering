@@ -22,6 +22,7 @@ resource "aws_security_group" "sg_public" {
 }
 
 resource "aws_instance" "ec2_public" {
+    count                  = 2
     ami                    = "ami-0c101f26f147fa7fd"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_vpc10_pub.id
