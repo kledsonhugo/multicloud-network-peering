@@ -19,16 +19,10 @@ resource "aws_security_group" "sg_public" {
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
-    ingress {
-        from_port   = 80
-        to_port     = 80
-        protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
 }
 
 resource "aws_instance" "ec2_public" {
-    ami                    = "ami-0f409bae3775dc8e5"
+    ami                    = "ami-0c101f26f147fa7fd"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_vpc10_pub.id
     vpc_security_group_ids = [aws_security_group.sg_public.id]

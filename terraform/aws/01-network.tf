@@ -21,14 +21,14 @@ resource "aws_subnet" "sn_vpc20_priv" {
     availability_zone = "us-east-1a"
 }
 
+resource "aws_internet_gateway" "igw_vpc10" {
+    vpc_id = aws_vpc.vpc10.id
+}
+
 resource "aws_vpc_peering_connection" "vpc_peering" {
     peer_vpc_id   = aws_vpc.vpc20.id
     vpc_id        = aws_vpc.vpc10.id
     auto_accept   = true  
-}
-
-resource "aws_internet_gateway" "igw_vpc10" {
-    vpc_id = aws_vpc.vpc10.id
 }
 
 resource "aws_route_table" "rt_sn_vpc10_pub" {
@@ -43,17 +43,17 @@ resource "aws_route_table" "rt_sn_vpc10_pub" {
     }
 }
 
+resource "aws_route_table_association" "rt_sn_vpc10_pub_To_sn_vpc10_pub" {
+  subnet_id      = aws_subnet.sn_vpc10_pub.id
+  route_table_id = aws_route_table.rt_sn_vpc10_pub.id
+}
+
 resource "aws_route_table" "rt_sn_vpc20_priv" {
     vpc_id = aws_vpc.vpc20.id
     route {
         cidr_block = "10.0.0.0/16"
         gateway_id = aws_vpc_peering_connection.vpc_peering.id
     }
-}
-
-resource "aws_route_table_association" "rt_sn_vpc10_pub_To_sn_vpc10_pub" {
-  subnet_id      = aws_subnet.sn_vpc10_pub.id
-  route_table_id = aws_route_table.rt_sn_vpc10_pub.id
 }
 
 resource "aws_route_table_association" "rt_sn_vpc20_priv_To_sn_vpc20_priv" {

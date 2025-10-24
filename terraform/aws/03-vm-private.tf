@@ -16,7 +16,7 @@ resource "aws_security_group" "sg_private" {
 }
 
 resource "aws_instance" "ec2_private" {
-    ami                    = "ami-0f409bae3775dc8e5"
+    ami                    = "ami-0c101f26f147fa7fd"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_vpc20_priv.id
     vpc_security_group_ids = [aws_security_group.sg_private.id]

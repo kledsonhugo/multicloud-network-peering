@@ -10,20 +10,22 @@ resource "azurerm_network_interface" "vm02_nic_private" {
 }
 
 resource "azurerm_virtual_machine" "vm02_private" {
-    name                          = "vm02-private"
-    location                      = azurerm_resource_group.rg.location
-    resource_group_name           = azurerm_resource_group.rg.name
-    network_interface_ids         = [azurerm_network_interface.vm02_nic_private.id]
-    vm_size                       = "Standard_D2s_v3"
-    delete_os_disk_on_termination = true
+    name                             = "vm02-private"
+    location                         = azurerm_resource_group.rg.location
+    resource_group_name              = azurerm_resource_group.rg.name
+    network_interface_ids            = [azurerm_network_interface.vm02_nic_private.id]
+    vm_size                          = "Standard_D2s_v3"
+    delete_os_disk_on_termination    = true
+    delete_data_disks_on_termination = true
     storage_image_reference {
         publisher = "Canonical"
-        offer     = "0001-com-ubuntu-server-jammy"
-        sku       = "22_04-lts"
+        offer     = "ubuntu-24_04-lts"
+        sku       = "server"
         version   = "latest"
     }
     storage_os_disk {
         name              = "vm02-os-disk-private"
+        caching           = "ReadWrite"
         create_option     = "FromImage"
         managed_disk_type = "Standard_LRS"
     }

@@ -2,12 +2,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 4.7.0"
+      version = ">= 4.47.0"
     }
   }
   backend "azurerm" {
-    resource_group_name  = "rg-staticsitelbpeeringtf"
-    storage_account_name = "staticsitelbpeeringkb"
+    resource_group_name  = "rg-nwpeeringtf"
+    storage_account_name = "nwpeeringtfkb001"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
