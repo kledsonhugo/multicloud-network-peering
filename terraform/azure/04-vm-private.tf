@@ -1,19 +1,19 @@
-resource "azurerm_network_interface" "vm02_nic_private" {
-    name                = "vm02-nic-private"
+resource "azurerm_network_interface" "vm_nic_private" {
+    name                = "vm-nic-private"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
-        name                          = "vm02-ipconfig-private"
+        name                          = "vm-ipconfig-private"
         subnet_id                     = azurerm_subnet.snvnet20priv.id
         private_ip_address_allocation = "Dynamic"
     }
 }
 
-resource "azurerm_virtual_machine" "vm02_private" {
-    name                             = "vm02-private"
+resource "azurerm_virtual_machine" "vm_private" {
+    name                             = "vm-private"
     location                         = azurerm_resource_group.rg.location
     resource_group_name              = azurerm_resource_group.rg.name
-    network_interface_ids            = [azurerm_network_interface.vm02_nic_private.id]
+    network_interface_ids            = [azurerm_network_interface.vm_nic_private.id]
     vm_size                          = "Standard_D2s_v3"
     delete_os_disk_on_termination    = true
     delete_data_disks_on_termination = true
@@ -24,13 +24,13 @@ resource "azurerm_virtual_machine" "vm02_private" {
         version   = "latest"
     }
     storage_os_disk {
-        name              = "vm02-os-disk-private"
+        name              = "vm-os-disk-private"
         caching           = "ReadWrite"
         create_option     = "FromImage"
         managed_disk_type = "Standard_LRS"
     }
     os_profile {
-        computer_name  = "vm02-private"
+        computer_name  = "vm-private"
         admin_username = "azureuser"
         admin_password = "Password1234!"
     }
